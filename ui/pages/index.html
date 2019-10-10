@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyDairy | view-diaries</title>
+    <link rel="stylesheet" href="../styles/index.css">
+    <script src="../js/index.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">MyDiary</div>
+            <div></div>
+            <div class="left_buttons">
+                <div onclick="openNotificationModel()" id="notification"></div>
+
+                <div onclick="openUserModel()" id="user"></div>
+            </div>
+        </div>
+
+        <div class="stories">
+            <div class="story">
+                <div onclick="openModel()" class="title">Lorem ipsum dolor sit amet.</div>
+                <div class="content">Lorem ipsum dolor sit amet </div>
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="openEditModel()" id="edit">Edit</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story">
+                <div onclick="openModel()" class="title">Lorem ipsum dolor sit amet.</div>
+                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui architecto
+                    sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat repudiandae,
+                    harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur, ad
+                    eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                    deleniti praesentium?</div>
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="openEditModel()" id="edit">Edit</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story">
+                <div onclick="openModel()" class="title">Lorem ipsum dolor sit amet.</div>
+                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui architecto
+                    sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat repudiandae,
+                    harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur, ad
+                    eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                    deleniti praesentium?</div>
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="openEditModel()" id="edit">Edit</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story">
+                <div onclick="openModel()" class="title">Lorem ipsum dolor sit amet.</div>
+                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui architecto
+                    sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat repudiandae,
+                    harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur, ad
+                    eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                    deleniti praesentium?</div>
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="openEditModel()" id="edit">Edit</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story">
+                <div onclick="openModel()" class="title">Lorem ipsum dolor sit amet.</div>
+                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui architecto
+                    sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat repudiandae,
+                    harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur, ad
+                    eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                    deleniti praesentium?</div>
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="openEditModel()" id="edit">Edit</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story">
+                <div onclick="openModel()" class="title">Lorem ipsum dolor sit amet.</div>
+                <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui architecto
+                    sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat repudiandae,
+                    harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur, ad
+                    eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                    deleniti praesentium?</div>
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="openEditModel()" id="edit">Edit</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="openAddModel()" id="add">+</button>
+
+    <div class="model">
+        <div class="model-content">
+            <div class="content-wrap">
+                <div class="title">Lorem ipsum dolor sit amet.</div>
+                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui architecto
+                    sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat repudiandae,
+                    harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur, ad
+                    eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                    deleniti praesentium?</div>
+                <div class="button_container-model">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="closeModel()" id="edit">Cancel</button>
+                        <button onclick="openDeleteModel()" id="delete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="add-model">
+        <div class="model-content">
+            <div class="content-wrap">
+
+                <div class="textarea-field">
+                    <div>
+                        <label class="label">Title</label>
+                        <input type="text" placeholder="Title">
+                    </div>
+                </div>
+                <div class="textarea-field">
+                    <div>
+                        <label class="label">Pen down thoughts and feelings</label>
+                        <textarea placeholder="Typing in here now!" cols="30" rows="5"></textarea>
+
+                    </div>
+                </div>
+
+                <div class="button_container-model">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="closeAddModel()" id="edit">Cancel</button>
+                        <button id="delete">save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="delete-model">
+        <div class="model-content">
+            <div class="content-wrap-delete">
+
+
+                Are you sure you want to delete this diary from your diaries?
+
+
+                <div class="button_container">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="closeDeleteModel()" id="edit">Cancel</button>
+                        <button id="delete">remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification-model">
+        <div class="model-content">
+            <div class="content-wrap-notification">
+                <ul class="list-notification">
+                    <li>Notification 1</li>
+                    <li>Notification 2</li>
+                    <li>Notification 3</li>
+                    <li>Notification 4</li>
+                    <li>Notification 5</li>
+                </ul>
+                <div id="nf-btn"><button onclick="closeNotificationModel()" id="edit">close</button></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="edit-model">
+        <div class="model-content">
+            <div class="content-wrap-edit">
+
+
+                <div class="textarea-field">
+                    <div>
+                        <label class="label">Title</label>
+                        <textarea class="title-edit" cols="1" rows="1"> Lorem ipsum dolor sit amet.</textarea>
+                    </div>
+                </div>
+                <div class="textarea-field">
+                    <div>
+                        <label class="label">Pen down thoughts and feelings</label>
+                        <textarea cols="30" rows="10">
+
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis qui
+                            architecto
+                            sunt enim deleniti sit consequuntur nobis sequi ullam voluptates exercitationem placeat
+                            repudiandae,
+                            harum recusandae fugiat maxime esse aspernatur culpa molestiae! Ex voluptate quibusdam pariatur,
+                            ad
+                            eaque delectus provident distinctio sit laborum sunt perspiciatis nemo voluptatibus, dolor eos
+                            deleniti praesentium?
+                        
+                    </textarea>
+
+                    </div>
+                </div>
+                <div class="button_container-model">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="closeEditModel()" id="edit">Cancel</button>
+                        <button id="delete">save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="user-model">
+        <div class="model-content">
+            <div class="content-wrap-user">
+
+                <div class="user-container">
+                    <div class="user-profile"></div>
+
+                    <div class="input-user-form">
+                        <div class="input-user">
+                            <div>
+                                <label class="label">First Name</label>
+                                <input type="text" id="firstname" placeholder="John">
+                            </div>
+                        </div>
+                        <div class="input-user">
+                            <div>
+                                <label class="label">Last Name</label>
+                                <input type="text" id="lastname" placeholder="Rukundo">
+                            </div>
+                        </div>
+                        <div class="input-user">
+                            <div>
+                                <label class="label">Email</label>
+                                <input type="text" id="email" placeholder="example@mydiary.com">
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div>
+
+                    <div class="checkbox"> <input type="checkbox"></div>
+
+                </div>
+
+                <div class="button_container-model-user">
+                    <div class="date">25 Sep 2019</div>
+                    <div class="btns">
+                        <button onclick="closeUserModel()" id="edit">Cancel</button>
+                        <button id="delete">remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
