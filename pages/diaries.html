@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>MyDairy | view-diaries</title>
-    <link rel="stylesheet" href="../styles/index.css">
-    <script src="../js/index.js"></script>
+    <title>MyDairy | Diaries</title>
+    <link rel="stylesheet" href="../css/diaries.css">
+    <script src="../js/diaries.js"></script>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <div class="logo">MyDiary</div>
             <div></div>
             <div class="left_buttons">
-                <div onclick="openNotificationModel()" id="notification"></div>
+                <div id="notification" class="notification-dropdown">
+                    <div class="notification-dropdown-content">
+                        <p> No notifications </p>
+
+                    </div>
+                </div>
 
                 <div onclick="openUserModel()" id="user"></div>
             </div>
@@ -185,20 +192,6 @@
         </div>
     </div>
 
-    <div class="notification-model">
-        <div class="model-content">
-            <div class="content-wrap-notification">
-                <ul class="list-notification">
-                    <li>Notification 1</li>
-                    <li>Notification 2</li>
-                    <li>Notification 3</li>
-                    <li>Notification 4</li>
-                    <li>Notification 5</li>
-                </ul>
-                <div id="nf-btn"><button onclick="closeNotificationModel()" id="edit">close</button></div>
-            </div>
-        </div>
-    </div>
     </div>
 
     <div class="edit-model">
@@ -209,7 +202,7 @@
                 <div class="textarea-field">
                     <div>
                         <label class="label">Title</label>
-                        <textarea class="title-edit" cols="1" rows="1"> Lorem ipsum dolor sit amet.</textarea>
+                        <input type="text" value=" Lorem ipsum dolor sit amet.">
                     </div>
                 </div>
                 <div class="textarea-field">
@@ -271,21 +264,21 @@
                     </div>
 
                 </div>
-                <div>
-
-                    <div class="checkbox"> <input type="checkbox"></div>
-
-                </div>
-
-                <div class="button_container-model-user">
-                    <div class="date">25 Sep 2019</div>
-                    <div class="btns">
-                        <button onclick="closeUserModel()" id="edit">Cancel</button>
-                        <button id="delete">remove</button>
+                <div class="checkbox">
+                    <div></div>
+                    <div class="ck_row">
+                        <input type="checkbox">
+                        <label class="label-ck">Enable notification </label>
                     </div>
                 </div>
+
+                <div class="btn-user">
+                    <button onclick="closeUserModel()" id="edit">Exit</button>
+                </div>
+
             </div>
         </div>
     </div>
 </body>
+
 </html>

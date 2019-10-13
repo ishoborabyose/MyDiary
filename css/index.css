@@ -1,0 +1,180 @@
+html,
+body {
+    height: 100vh;
+    width: 100%;
+    background: #154750;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 32%;
+    align-items: center;
+    justify-items: center;
+
+  }
+
+.intro {
+    color: #ffffff;
+    text-align: center;
+    font-size: 80px;
+    padding: 0px 32px; 
+}
+
+.intro p {
+    font-size: 32px;
+}
+
+.signup-form {
+    
+    width: 312.547px;
+    background-color: white;
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    justify-items: center;
+    align-items: center;
+    box-shadow: 0 0 16px 0 #00000080;
+    padding: 0px 32px;
+}
+
+
+.signup {
+    color: #154750;
+}
+
+.label {
+    font-weight: bold;
+    color: #154750;
+}
+
+input {
+    background: rgb(250, 245, 245);
+    text-decoration: none;
+    padding: 12px 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 18px;
+    width: 248.547px;
+}
+
+input:focus {
+    outline: none;
+}
+
+.input-field {
+    width: 100%;
+    display: grid;
+    justify-items: center;
+}
+
+.input-field div {
+    width: 290.55px;
+    display: grid;
+    grid-row-gap: 5px;
+}
+
+
+
+button {
+    width: 290.55px;
+    background:#1c5f6b;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border: 1px solid rgb(129, 109, 109);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin: 4px 2px;
+}
+
+button:hover {
+    background: #154750;
+}
+
+
+button:focus {
+    outline: none;
+}
+
+.go-signin {
+    font-size: 18px;
+    padding: 16px 0px;
+}
+
+
+a {
+    text-decoration: none;
+    color: #154750;
+    font-weight: bold;
+}
+
+a:hover {
+    color: #278697;
+}
+
+@media only screen and (max-width: 500px)  {
+  .intro{
+      display: none;
+  }
+
+  .container{
+      display: grid;
+      grid-template-columns: 100%;
+      justify-items: center;      
+  }
+
+  html,
+body {
+    background-color: white;
+}
+
+.signup-form {
+    box-shadow: 0 0 0px 0 #00000000;
+    padding: 0px 0px;
+}
+
+}
+
+/* @media only screen and (max-width: 600px){
+   
+    .intro{
+        font-size: 32px;    
+    }
+
+    .intro p {
+    font-size: 16px;
+   }
+
+   .container{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+  }
+
+    .signup-form{
+        margin-bottom: 32px;
+        margin-top: 32px;
+        width: 212.547px;
+    }
+
+  
+    input{
+        width: 170.547px;
+    }
+
+    button{
+        width: 135.547px;    
+    }
+
+    .go-signin {
+    font-size: 15px;
+    margin-right: 64px;
+    padding: 5px 0px;
+
+    }
+
+
+} */
