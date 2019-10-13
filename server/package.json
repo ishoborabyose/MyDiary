@@ -1,0 +1,26 @@
+{
+  "name": "mydiary",
+  "version": "1.0.0",
+  "description": "MyDiary is an online journal where users can pen down their thoughts and feelings.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishoborabyose/MyDiary.git"
+  },
+  "keywords": [
+    "MyDiary"
+  ],
+  "author": "Ishoborabyose Beatrice",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishoborabyose/MyDiary/issues"
+  },
+  "homepage": "https://github.com/ishoborabyose/MyDiary#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^1.19.3"
+  }
+}
