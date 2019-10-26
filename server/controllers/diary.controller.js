@@ -31,3 +31,19 @@ export const getAllDiaries = (req, res) => {
         data: diaries
     });
 };
+
+
+export const deleteEntries = (req, res) => {
+
+    const diary = diaries.findIndex(diary => diary.id == req.params.id);
+
+    if (diary == -1) return res.status(404).send('The  Diary with given ID are not found');
+
+    //Removes elements from an array and, if necessary, inserts new elements.
+    diaries.splice(Diary, 1);
+
+    return res.status(200).json({
+        status: 200,
+        message: "Entry successfully deleted ",
+    });
+}
