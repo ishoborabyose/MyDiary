@@ -34,3 +34,29 @@ export const signup = async (req, res) => {
     });
 
 }
+
+export const signin = (req, res) => {
+    if (!req.body.email || !req.body.password) return res.status(400).send("Email or Password is incorrect.");
+
+    const user = users.find(c => c.email == req.body.email);
+
+    if (!user) return res.status(400).send("User with provided email do not exist!");
+
+
+    const token = jwt.sign({ email: user.email }, process.env.MY_SECRET, { expiresIn: '2d' });
+
+    if (user.password == req.body.password) {
+        return res.status(201).send({
+            message: "successfully log in",
+            data: {
+                user,
+                token
+            }
+
+        });
+    } else {
+        return res.status(400).send("Password not match!");
+    }
+};
+
+
