@@ -66,3 +66,18 @@ export const modifyEntry = (req, res) =>{
         message: "Entry successfully edited"
    });
 };
+
+
+export const getDiaryById = (req, res) => {
+
+    const diary = diaries.find(diary => diary.id === parseInt(req.params.id));
+
+    if (diary) {
+        return res.json({
+            status: 200,
+            diary
+        });
+    } else {
+        return res.status(401).send("No diary found match with provided id");
+    }
+};
