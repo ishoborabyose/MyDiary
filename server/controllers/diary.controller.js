@@ -47,3 +47,22 @@ export const deleteEntries = (req, res) => {
         message: "Entry successfully deleted ",
     });
 }
+
+
+export const modifyEntry = (req, res) =>{
+    //look up the diaries
+    const index = diaries.findIndex(diary => diary.id == req.params.id);
+
+    //if not exist return 404
+    if(index == -1) return res.status(404).send("Diary with a given id was not found ")
+    //update the diary
+    
+    diaries[index].title = req.body.title;
+    diaries[index].description = req.body.description;
+   
+    //return the updated diary
+    return res.status(201).json({
+       status: 201,
+        message: "Entry successfully edited"
+   });
+};
