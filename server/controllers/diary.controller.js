@@ -23,3 +23,11 @@ export const createEntry = (req, res) => {
         message: "Entry successfully created"
     });
 }
+
+
+export const getAllDiaries = (req, res) => {
+    return res.json({
+        status: 200,
+        data: diaries
+    });
+};
