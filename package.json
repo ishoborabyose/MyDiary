@@ -1,0 +1,46 @@
+{
+  "name": "mydiary",
+  "version": "1.0.0",
+  "description": "MyDiary is an online journal where users can pen down their thoughts and feelings.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require @babel/register \"./{,!(node_modules)/**/}*.test.js\" --exit",
+    "start": "nodemon --exec babel-node server/index.js",
+    "build": "babel --presets es2015 src -d lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ishoborabyose/MyDiary.git"
+  },
+  "keywords": [
+    "MyDiary"
+  ],
+  "author": "Ishoborabyose Beatrice",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ishoborabyose/MyDiary/issues"
+  },
+  "homepage": "https://github.com/ishoborabyose/MyDiary#readme",
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@hapi/joi": "^16.1.7",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "chai-http": "^4.3.0",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.5.1",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "@babel/runtime": "^7.6.3",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^1.19.4"
+  }
+}
