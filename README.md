@@ -15,13 +15,13 @@ https://github.com/ishoborabyose/MyDiary.git
 
 # API
 
--  userRoute.post('/auth/signup', validate, signup);
--  userRoute.post('/auth/signin',validate, signin);
--  router.get('/entries',verifiedToken, getAllDiaries);
--  router.get('/entries/:id', verifiedToken, getDiaryById);
--  router.post('/entries', verifiedToken, validate, createEntry);
--  router.delete('/entries/:id', verifiedToken, deleteEntries);
--  router.patch('/entries/:id',verifiedToken, validate, modifyEntry );
+userRoute.post('/auth/signup', validate, signup);
+userRoute.post('/auth/signin',validate, signin);
+router.get('/entries',verifiedToken, getAllDiaries);
+router.get('/entries/:id', verifiedToken, getDiaryById);
+router.post('/entries', verifiedToken, validate, createEntry);
+router.delete('/entries/:id', verifiedToken, deleteEntries);
+router.patch('/entries/:id',verifiedToken, validate, modifyEntry );
 
 
 
