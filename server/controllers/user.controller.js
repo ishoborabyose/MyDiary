@@ -8,8 +8,8 @@ dotenv.config();
 export const signup = async (req, res) => {
   if (!req.body.email || !req.body.password) {
     //bad request
-    return res.status(200).json({
-      status: 200,
+    return res.status(400).json({
+      status: 400,
       error: "Email and password are required"
     });
   }
@@ -33,7 +33,6 @@ export const signup = async (req, res) => {
     status: 201,
     message: "User created successfully",
     data: {
-      user,
       token
     }
   });
@@ -41,12 +40,17 @@ export const signup = async (req, res) => {
 
 export const signin = (req, res) => {
   if (!req.body.email || !req.body.password)
-    return res.status(400).send("Email or Password is incorrect.");
+    return res.status(400).send({
+      status: res.statusCode,
+      error: "please check your credentials"
+    });
 
   const user = users.find(c => c.email == req.body.email);
 
   if (!user)
-    return res.status(400).send("User with provided email do not exist!");
+    return res
+      .status(400)
+      .send("User with provided email or password do not exist!");
 
   const token = jwt.sign({ email: user.email }, process.env.MY_SECRET, {
     expiresIn: "2d"
@@ -54,9 +58,9 @@ export const signin = (req, res) => {
 
   if (user.password == req.body.password) {
     return res.status(201).send({
+      status: 201,
       message: "successfully log in",
       data: {
-        user,
         token
       }
     });
