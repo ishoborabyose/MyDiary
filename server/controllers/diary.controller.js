@@ -1,41 +1,69 @@
 import { Diary } from "../models/diary.model";
-import { diaries } from "../db/db";
+import uuid from "uuid";
+import moment from "moment";
+import { getEmail } from "../helpers/userdata";
 
 export const createEntry = (req, res) => {
   if (!req.body.title || !req.body.description) {
     //bad request
-    res.status(404).json({
-      status: 404,
+    res.json({
+      status: 400,
       error: "title and description are required"
     });
     return;
   }
+  const userEmail = getEmail(req.header("token"));
+  console.log(userEmail);
+  const id = uuid.v1();
+  const newdiary = {
+    id,
+    title: req.body.title,
+    description: req.body.description,
+    userEmail: userEmail,
+    createdOn: moment().format("llll")
+  };
 
-  const diary = new Diary(req.body.id, req.body.title, req.body.description);
+  Diary.push(newdiary);
+  const { title, description, createdOn, userId } = newdiary;
 
-  diaries.push(diary);
-
-  res.status(404).json({
+  res.status(201).json({
     status: 201,
-    message: "Entry successfully created"
+    data: {
+      id,
+      title,
+      description,
+      createdOn,
+      userEmail,
+      message: "Entry successfully created"
+    }
   });
 };
 
 export const getAllDiaries = (req, res) => {
   return res.json({
     status: 200,
-    data: diaries
+    data: Diary
   });
 };
 
 export const deleteEntries = (req, res) => {
-  const diary = diaries.findIndex(diary => diary.id == req.params.id);
+  const index = Diary.find(element => element.id == req.params.id);
 
-  if (diary == -1)
-    return res.status(404).send("The  Diary with given ID are not found");
+  if (!index) {
+    return res.status(404).json({
+      status: 404,
+      error: "not found"
+    });
+  }
+  const userEmail = getEmail(req.header("token"));
+  if (index.userEmail !== userEmail) {
+    return res.status(403).json({
+      status: 403,
+      error: "entry is incorrect"
+    });
+  }
 
-  //Removes elements from an array and, if necessary, inserts new elements.
-  diaries.splice(Diary, 1);
+  Diary.splice(Diary.indexOf(Diary), 1);
 
   return res.status(200).json({
     status: 200,
@@ -44,33 +72,56 @@ export const deleteEntries = (req, res) => {
 };
 
 export const modifyEntry = (req, res) => {
-  //look up the diaries
-  const index = diaries.findIndex(diary => diary.id == req.params.id);
+  const index = Diary.find(element => element.id == req.params.id);
+  if (!index) {
+    return res.status(404).json({
+      status: 404,
+      error: "not found"
+    });
+  }
 
-  //if not exist return 404
-  if (index == -1)
-    return res.status(404).send("Diary with a given id was not found ");
-  //update the diary
+  const userEmail = getEmail(req.header("token"));
+  if (index.userEmail !== userEmail) {
+    return res.status(403).json({
+      status: 403,
+      error: "entry is incorrect"
+    });
+  }
 
-  diaries[index].title = req.body.title;
-  diaries[index].description = req.body.description;
-
-  //return the updated diary
-  return res.status(201).json({
-    status: 201,
-    message: "Entry successfully edited"
+  index.title = req.body.title;
+  index.description = req.body.description;
+  return res.status(200).json({
+    status: 200,
+    message: "Entry successfully edited",
+    data: {
+      index
+    }
   });
 };
-
 export const getDiaryById = (req, res) => {
-  const diary = diaries.find(diary => diary.id === parseInt(req.params.id));
+  const index = Diary.find(element => element.id == req.params.id);
 
-  if (diary) {
-    return res.json({
+  const userEmail = getEmail(req.header("token"));
+  if (index.userEmail !== userEmail) {
+    return res.status(403).json({
+      status: 403,
+      error: "entry is incorrect"
+    });
+  }
+  if (!index) {
+    return res.status(404).json({
+      status: 404,
+      error: "not found"
+    });
+  }
+  if (index) {
+    return res.status(200).json({
       status: 200,
-      diary
+      data: {
+        index
+      }
     });
   } else {
-    return res.status(200).send("No diary found match with provided id");
+    return res.status(401).send("No diary found match with provided id");
   }
 };
