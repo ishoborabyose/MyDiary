@@ -1,53 +1,111 @@
-import Joi from '@hapi/joi';
+import Joi from "joi";
 
-const signupSchema = Joi.object({
-    firstName: Joi.string().strict().trim().min(3).required(),
-    lastName: Joi.string().strict().trim().min(3).required(),
-    email:  Joi.string().strict().trim().min(3).required().email(),
-    password:  Joi.string().strict().trim().min(6).required(),
-});
-
-const signinSchema = Joi.object({
-    email: Joi.string().strict().trim().min(3).required().email(),
-    password:  Joi.string().strict().trim().min(6).required()
-});
-
-const diarySchema = Joi.object({
-    id: Joi.number().min(1).required(),
-    title: Joi.string().strict().trim().required(),
-    description: Joi.string().strict().trim().required()
-});
-
-const editDiarySchema = Joi.object({
-    title: Joi.string().strict().trim().required(),
-    description: Joi.string().strict().trim().required()
-});
-
-const Schemas = {
-    '/auth/signup': signupSchema,
-    '/auth/signin': signinSchema,
-    '/entries': diarySchema,
-    '/entries/:id': editDiarySchema,
+export const signupSchema = (req, res, next) => {
+  const schema = {
+    firstname: Joi.string()
+      .strict()
+      .trim()
+      .min(3)
+      .required(),
+    lastname: Joi.string()
+      .strict()
+      .trim()
+      .min(3)
+      .required(),
+    email: Joi.string()
+      .strict()
+      .trim()
+      .min(3)
+      .required()
+      .email(),
+    password: Joi.string()
+      .strict()
+      .trim()
+      .min(6)
+      .required()
+  };
+  const response = Joi.validate(req.body, schema);
+  if (response.error) {
+    return res.status(400).send({
+      status: 400,
+      error: `${(response.error.details[0].message)}`
+    });
+  }
+  next();
 };
 
-export const validate = (req, res, next) => {
-    // enabled HTTP methods for request data validation
-    const _supportedMethods = ['post', 'put', 'patch'];
-    // eg: /signup
-    const route = req.route.path;
-    // eg: put
-    const method = req.method.toLowerCase();
-    // check into an array if there is router user used eg: put 
-    if (_supportedMethods.includes(method) && Schemas[route] != undefined) {
-        // get schema for the current route
-        const schema = Schemas[route];
-        // Validate req.body using the schema and validation options
+export const signinSchema = (req, res, next) =>{
+  const schema= {
+    email: Joi.string()
+    .strict()
+    .trim()
+    .min(3)
+    .required()
+    .email(),
+  password: Joi.string()
+    .strict()
+    .trim()
+    .min(6)
+    .required()
+  } 
 
-        try {
-            schema.validate(req.body);
-            next();
-        } catch (error) {
-            return res.status(400).send({ 'status': 404, 'error': error });
-        }
-    }
+  const response = Joi.validate(req.body, schema);
+  if (response.error) {
+    return res.status(400).send({
+      status: 400,
+      error: `${(response.error.details[0].message)}`
+    });
+  }
+  next();
 };
+
+
+export const diarySchema = (req, res, next) =>{
+  const schema ={
+    id: Joi.number()
+    .min(1)
+    .required(),
+  title: Joi.string()
+    .strict()
+    .trim()
+    .required(),
+  description: Joi.string()
+    .strict()
+    .trim()
+    .required()
+  } 
+
+  const response = Joi.validate(req.body, schema);
+  if (response.error) {
+    return res.status(400).send({
+      status: 400,
+      error: `${(response.error.details[0].message)}`
+    });
+  }
+  next();
+};
+
+
+
+export const addDiarySchema = (req, res, next) =>{
+  const schema = {
+    title: Joi.string()
+    .strict()
+    .trim()
+    .required(),
+  description: Joi.string()
+    .strict()
+    .trim()
+    .required()
+  } 
+
+  const response = Joi.validate(req.body, schema);
+  if (response.error) {
+    return res.status(400).send({
+      status: 400,
+      error: `${(response.error.details[0].message)}`
+    });
+  }
+  next();
+};
+

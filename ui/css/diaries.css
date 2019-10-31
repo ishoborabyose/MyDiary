@@ -326,6 +326,7 @@ button:focus {
 .user-profile {
   display: grid;
   align-items: center;
+  
   justify-items: center;
   background-image: url("../images/user.jpg");
   width: 140px;
