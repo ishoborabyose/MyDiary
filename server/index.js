@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/api/v1", userRoute, diaryRoutes);
 
 app.listen(port, () =>
-  console.log(`Server is running on http://localhost:${PORT}`)
+  console.log(`Server is running on http://localhost:${port}`)
 );
 
 export default app;
