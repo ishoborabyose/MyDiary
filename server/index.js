@@ -5,13 +5,13 @@ import diaryRoutes from "./routes/diary.route";
 
 const app = express();
 
-const PORT = process.env.PORT || 2000;
+const port = process.env.PORT || 2000;
 
 app.use(express.json());
 
 app.use("/api/v1", userRoute, diaryRoutes);
 
-app.listen(PORT, () =>
+app.listen(port, () =>
   console.log(`Server is running on http://localhost:${PORT}`)
 );
 
