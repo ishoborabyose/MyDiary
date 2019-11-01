@@ -13,7 +13,6 @@ export const createEntry = (req, res) => {
     return;
   }
   const userEmail = getEmail(req.header("token"));
-  console.log(userEmail);
   const id = uuid.v1();
   const newdiary = {
     id,
@@ -100,14 +99,6 @@ export const modifyEntry = (req, res) => {
 };
 export const getDiaryById = (req, res) => {
   const index = Diary.find(element => element.id == req.params.id);
-
-  const userEmail = getEmail(req.header("token"));
-  if (index.userEmail !== userEmail) {
-    return res.status(403).json({
-      status: 403,
-      error: "entry is incorrect"
-    });
-  }
   if (!index) {
     return res.status(404).json({
       status: 404,
