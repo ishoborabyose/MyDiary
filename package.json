@@ -4,8 +4,10 @@
   "description": "MyDiary is an online journal where users can pen down their thoughts and feelings.",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=text --reporter=html mocha --require @babel/register \"./{,!(node_modules)/**/}*.test.js\" --exit",
-    "start": "nodemon --exec babel-node server/index.js",
+    "start": "babel-node server/index.js",
+    "dev": "nodemon --exec babel-node server/index.js",
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --require @babel/polyfill --timeout 500 server/test/ --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "build": "babel --presets es2015 src -d lib"
   },
   "repository": {
@@ -23,10 +25,13 @@
   "homepage": "https://github.com/ishoborabyose/MyDiary#readme",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/polyfill": "^7.6.0",
     "@hapi/joi": "^16.1.7",
+    "babel-node": "0.0.1-security",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "chai-http": "^4.3.0",
+    "coveralls": "^3.0.7",
     "dotenv": "^8.2.0",
     "eslint": "^6.5.1",
     "express": "^4.17.1",
