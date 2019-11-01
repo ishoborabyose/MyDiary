@@ -1,8 +1,7 @@
 {
   "name": "mydiary",
   "engines": {
-    "node": "10.16.3",
-    "npm": "6.9.0"
+    "node": "10"
   },
   "version": "1.0.0",
   "description": "MyDiary is an online journal where users can pen down their thoughts and feelings.",
