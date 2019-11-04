@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import uuid from "uuid";
 import { Pool } from "pg";
+import decrypt from "../helpers/decryptpw";
 
 dotenv.config();
 
@@ -35,14 +36,14 @@ export const signup = async (req, res) => {
   try {
     
     const { rows } = await pool.query(createQuery, values);
-    const token = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
+    const authtoken = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
       expiresIn: "2d"
     });
     return res.status(201).json({
       status: 201,
       message: "User created successfully",
       data: {
-        token
+        authtoken
       },
       userDetails: {
         id: rows[0].id,
@@ -60,40 +61,37 @@ export const signup = async (req, res) => {
 };
 
 
-export const signin = (req, res) => {
-//   if (!req.body.email || !req.body.password)
-//     return res.status(400).send({
-//       status: 400,
-//       error: "please check your credentials"
-//     });
+export const signin = async (req, res) => {
+    let { email, password } = req.body;
+    
+    const text = 'SELECT * FROM users WHERE email = $1';
+    try {
+      const { rows } = await pool.query( text, [ email ] );
+      
+      if (rows.length===0 && !decryptpw(rows[0].password,password)) {
+        return res.status(401).send({'message': ' Incorrect password or password' });
+      }
+  
 
-//   const newUser = User.find(c => c.email == req.body.email);
-
-//   if (!newUser)
-//     return res.status(400).send({
-//       status: 400,
-//       error: "User with provided email or password do not exist!"
-//     });
-
-//   const token = jwt.sign({ email: newUser.email }, process.env.MY_SECRET, {
-//     expiresIn: "2d"
-//   });
-
-//   const id = uuid.v1();
-//   if (newUser.password == req.body.password) {
-//     const { firstname, lastname, email } = newUser;
-//     return res.status(201).send({
-//       status: 201,
-//       message: "successfully log in",
-//       data: {
-//         token
-//       },
-//       userDetails: {
-//         id,
-//         firstname,
-//         lastname,
-//         email
-//       }
-//     });
-//   }
- };
+    const authtoken = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
+      expiresIn: "2d"
+    });
+    return res.status(201).json({
+      status: 201,
+      message: "successfully logged in",
+      data: {
+        authtoken
+      ,
+      userDetails: {
+        id: rows[0].id,
+        firstname: rows[0].firstname,
+        lastname: rows[0].lastname,
+        email: rows[0].email,
+      },
+  }
+    } )
+  } catch ( error )
+  {
+  return res.status(500).send({status: 500 , error: error.message})
+    }
+  };
