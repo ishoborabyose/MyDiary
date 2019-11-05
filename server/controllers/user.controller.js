@@ -62,7 +62,7 @@ export const signup = async (req, res) => {
 
 
 export const signin = async (req, res) => {
-    let { email, password } = req.body;
+    const { email, password } = req.body;
     
     const text = 'SELECT * FROM users WHERE email = $1';
     try {
@@ -76,8 +76,8 @@ export const signin = async (req, res) => {
     const authtoken = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
       expiresIn: "2d"
     });
-    return res.status(201).json({
-      status: 201,
+    return res.status(200).json({
+      status: 200,
       message: "successfully logged in",
       data: {
         authtoken
