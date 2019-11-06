@@ -1,29 +1,31 @@
-import { Diary } from "../models/diary.model";
-import uuid from "uuid";
-import moment from "moment";
-import { getEmail } from "../helpers/userdata";
+import uuid from 'uuid';
+import moment from 'moment';
+import { Diary } from '../models/diary.model';
+import { getEmail } from '../helpers/userdata';
 
 export const createEntry = (req, res) => {
   if (!req.body.title || !req.body.description) {
-    //bad request
+    // bad request
     res.json({
       status: 400,
-      error: "title and description are required"
+      error: 'title and description are required',
     });
     return;
   }
-  const userEmail = getEmail(req.header("token"));
+  const userEmail = getEmail(req.header('token'));
   const id = uuid.v1();
   const newdiary = {
     id,
     title: req.body.title,
     description: req.body.description,
-    userEmail: userEmail,
-    createdOn: moment().format("llll")
+    userEmail,
+    createdOn: moment().format('llll'),
   };
 
   Diary.push(newdiary);
-  const { title, description, createdOn, userId } = newdiary;
+  const {
+    title, description, createdOn, userId,
+  } = newdiary;
 
   res.status(201).json({
     status: 201,
@@ -32,33 +34,31 @@ export const createEntry = (req, res) => {
       title,
       description,
       createdOn,
-      userEmail,
-      message: "Entry successfully created"
-    }
+      userId,
+      message: 'Entry successfully created',
+    },
   });
 };
 
-export const getAllDiaries = (req, res) => {
-  return res.json({
-    status: 200,
-    data: Diary
-  });
-};
+export const getAllDiaries = (req, res) => res.json({
+  status: 200,
+  data: Diary,
+});
 
 export const deleteEntries = (req, res) => {
-  const index = Diary.find(element => element.id == req.params.id);
+  const index = Diary.find((element) => element.id === req.params.id);
 
   if (!index) {
     return res.status(404).json({
       status: 404,
-      error: "not found"
+      error: 'not found',
     });
   }
-  const userEmail = getEmail(req.header("token"));
+  const userEmail = getEmail(req.header('token'));
   if (index.userEmail !== userEmail) {
     return res.status(403).json({
       status: 403,
-      error: "entry is incorrect"
+      error: 'entry is incorrect',
     });
   }
 
@@ -66,24 +66,24 @@ export const deleteEntries = (req, res) => {
 
   return res.status(200).json({
     status: 200,
-    message: "Entry successfully deleted "
+    message: 'Entry successfully deleted ',
   });
 };
 
 export const modifyEntry = (req, res) => {
-  const index = Diary.find(element => element.id == req.params.id);
+  const index = Diary.find((element) => element.id === req.params.id);
   if (!index) {
     return res.status(404).json({
       status: 404,
-      error: "not found"
+      error: 'not found',
     });
   }
 
-  const userEmail = getEmail(req.header("token"));
+  const userEmail = getEmail(req.header('token'));
   if (index.userEmail !== userEmail) {
     return res.status(403).json({
       status: 403,
-      error: "entry is incorrect"
+      error: 'entry is incorrect',
     });
   }
 
@@ -91,28 +91,27 @@ export const modifyEntry = (req, res) => {
   index.description = req.body.description;
   return res.status(200).json({
     status: 200,
-    message: "Entry successfully edited",
+    message: 'Entry successfully edited',
     data: {
-      index
-    }
+      index,
+    },
   });
 };
 export const getDiaryById = (req, res) => {
-  const index = Diary.find(element => element.id == req.params.id);
+  const index = Diary.find((element) => element.id === req.params.id);
   if (!index) {
     return res.status(404).json({
       status: 404,
-      error: "not found"
+      error: 'not found',
     });
   }
   if (index) {
     return res.status(200).json({
       status: 200,
       data: {
-        index
-      }
+        index,
+      },
     });
-  } else {
-    return res.status(401).send("No diary found match with provided id");
   }
+  return res.status(401).send('No diary found match with provided id');
 };

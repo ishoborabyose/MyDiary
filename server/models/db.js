@@ -1,16 +1,16 @@
-import { Pool } from "pg";
-import dotenv from "dotenv";
+import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
 dotenv.config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
 });
-pool.on("connect", () => {
-  console.log("connected to the db");
+pool.on('connect', () => {
+  process.stdout.write('connected to the db');
 });
 
-const createTables = pool.query(` 
+export const createTables = pool.query(` 
 CREATE TABLE IF NOT EXISTS users(
     id UUID PRIMARY KEY,
     firstname VARCHAR NOT NULL,
