@@ -18,11 +18,7 @@ export const signupSchema = (req, res, next) => {
       .min(3)
       .required()
       .email(),
-    password: Joi.string()
-      .strict()
-      .trim()
-      .min(6)
-      .required(),
+      password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/).required(),
   };
   const response = Joi.validate(req.body, schema);
   if (response.error) {
@@ -42,11 +38,7 @@ export const signinSchema = (req, res, next) => {
       .min(3)
       .required()
       .email(),
-    password: Joi.string()
-      .strict()
-      .trim()
-      .min(6)
-      .required(),
+    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/).required(),
   };
 
   const response = Joi.validate(req.body, schema);
@@ -77,7 +69,6 @@ export const diaryparamsschema = (req, res, next) => {
 
 export const diarySchema = (req, res, next) => {
   const schema = {
-
     title: Joi.string()
       .strict()
       .trim()

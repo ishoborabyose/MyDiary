@@ -6,7 +6,7 @@ import { Pool } from "pg";
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 } );
-const id = uuid.v1();
+
 const createdon = moment().format( "llll" );
       
 export const createEntry = async ( req, res ) =>
@@ -14,8 +14,8 @@ export const createEntry = async ( req, res ) =>
   const userId = getId( req.header( 'token' ) );
   const { title, description, } = req.body;
   const createQuery = `INSERT INTO entries (id, title, description, userid, createdon)
-  VALUES($1, $2, $3, $4, $5) returning * `;
-
+  VALUES($1, $2, $3, $4, $5)`;
+  const id = uuid.v4();
   const values = [
     id,
     title,
@@ -26,22 +26,22 @@ export const createEntry = async ( req, res ) =>
 
   try {
     
-    const { rows } = await pool.query( createQuery, values );
+    await pool.query( createQuery, values );
     return res.status(201).json({
       status: 201,
       message: "Entry created successfully",
       data: {
-        id: rows[0].id,
-        title: rows[0].title,
-        description: rows[0].description,
-        userId: rows[0].userid,
-        createdon: rows[0].createdon
+        id: id,
+        title: title,
+        description: description,
+        userId: userId,
+        createdon: createdon
       }, 
     });
     
   } catch (error) {
    
-    return res.status(400).send({status: 400 , error: error.message})
+    return res.status(400).send({status: 400 , error: error , me:"meeeee"})
   }
 };
 
