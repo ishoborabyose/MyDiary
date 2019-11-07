@@ -10,7 +10,8 @@ pool.on("connect", () => {
   console.log("connected to the db");
 });
 
-const createTables = pool.query(` 
+export const createTables = pool.query(` 
+DROP TABLE IF EXISTS users CASCADE;
 CREATE TABLE IF NOT EXISTS users(
     id UUID PRIMARY KEY,
     firstname VARCHAR NOT NULL,
@@ -19,11 +20,12 @@ CREATE TABLE IF NOT EXISTS users(
     password VARCHAR NOT NULL
 );
 
+DROP TABLE IF EXISTS entries CASCADE;
 CREATE TABLE IF NOT EXISTS  entries(
-    id UUID PRIMARY KEY,
+    id VARCHAR  PRIMARY KEY,
     title VARCHAR NOT NULL,
     description VARCHAR NOT NULL,
-    userId INTEGER ,
+    userId VARCHAR NOT NULL,
     createdOn VARCHAR NOT NULL
 );
  `);

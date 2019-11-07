@@ -12,7 +12,7 @@ const pool = new Pool({
   connectionString: process.env.DATABASE_URL
 });
 export const signup = async (req, res) => {
-  let { firstname, lastname, email, password } = req.body;
+  const { firstname, lastname, email, password } = req.body;
   const salt = await bcrypt.genSalt(10);
   const id = uuid.v1();
   const hashedPassword = await bcrypt.hash(password, salt);
@@ -36,14 +36,14 @@ export const signup = async (req, res) => {
   try {
     
     const { rows } = await pool.query(createQuery, values);
-    const authtoken = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
+    const token = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
       expiresIn: "2d"
     });
     return res.status(201).json({
       status: 201,
       message: "User created successfully",
       data: {
-        authtoken
+        token
       },
       userDetails: {
         id: rows[0].id,
@@ -61,37 +61,37 @@ export const signup = async (req, res) => {
 };
 
 
-export const signin = async (req, res) => {
+ export const signin = async (req, res) => {
     let { email, password } = req.body;
     
-    const text = 'SELECT * FROM users WHERE email = $1';
-    try {
-      const { rows } = await pool.query( text, [ email ] );
+     const text = 'SELECT * FROM users WHERE email = $1';
+     try {
+       const { rows } = await pool.query( text, [ email ] );
       
       if (rows.length===0 && !decryptpw(rows[0].password,password)) {
         return res.status(401).send({'message': ' Incorrect password or password' });
       }
   
 
-    const authtoken = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
+     const token = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
       expiresIn: "2d"
     });
-    return res.status(201).json({
-      status: 201,
-      message: "successfully logged in",
-      data: {
-        authtoken
-      ,
+     return res.status(201).json({
+       status: 201,
+       message: "successfully logged in",
+       data: {
+         token
+       ,
       userDetails: {
         id: rows[0].id,
-        firstname: rows[0].firstname,
-        lastname: rows[0].lastname,
+         firstname: rows[0].firstname,
+         lastname: rows[0].lastname,
         email: rows[0].email,
-      },
-  }
+       },
+   }
     } )
-  } catch ( error )
-  {
-  return res.status(500).send({status: 500 , error: error.message})
-    }
-  };
+   } catch ( error )
+   {
+   return res.status(500).send({status: 500 , error: error.message})
+     }
+   };
