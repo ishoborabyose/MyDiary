@@ -47,6 +47,21 @@ export const createEntry = async ( req, res ) =>
   }
 };
 
+export const getAllDiaries = async (req, res) =>
+{
+  const userId = getId( req.header( 'token' ) );
+  const getAllQuery = 'SELECT * FROM entries WHERE userid = $1';
+    try {
+      const { rows } = await pool.query(getAllQuery, [userId]);
+      return res.status( 200 ).json( {
+        status: 200,
+        message:"successful retrieved",
+        data: rows
+      } );
+    } catch(error) {
+      return res.status(400).send(error);
+    }
+}
 
 
 

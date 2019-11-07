@@ -79,7 +79,24 @@ describe("Entry diary", () => {
         expect(res.body).to.have.property("data");
         done();
       });
+  } );
+  
+  // all diaries
+describe(" Get all  diaries", () => {
+
+  it("should allow user  to  get  all entries", done => {
+    chai
+      .request(app)
+      .get("/api/v1/entries")
+      .set("token", token)
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an("object");
+        expect(res.body).to.have.property("data");
+        done();
+      });
   });
+});
 
 
 
