@@ -146,6 +146,32 @@ describe(" Edit diary", () => {
 
 } );
 
+//get entry by id
+
+describe( 'GET ENTRY BY ID', () =>
+{
+  it( 'Should not allow the use of non GUIDs', ( done ) =>
+  {
+    const entryId = '231325343453453452345tggfgdfg';
+    const token = jwt
+      .sign( { id: "e2401fe0-0131-11ea-bb8a-1f8a1331dd55" }, process.env.MY_SECRET )
+      .toString();
+    chai
+      .request( app )
+      .get( `/api/v1/entries/${ entryId }` )
+      .set( 'token', token )
+      .end( ( err, res ) =>
+      {
+        expect( res ).to.have.status( 400 );
+        expect( res.body ).to.have.property( 'error' );
+        done();
+      } );
+  } );
+} );
+
+
+ 
+
 
 
 

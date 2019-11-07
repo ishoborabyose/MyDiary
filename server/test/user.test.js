@@ -9,9 +9,20 @@ const user = {
   firstname: "ishoborabyose",
   lastname: "beatrice",
   email: "betty@gmail.com",
-  password: "betty123"
+  password: "Password@100"
 };
-describe("User signup", () => {
+describe( "User signup", () =>
+{
+  it('Should return Server Is On', (done) => {
+    chai
+      .request(app)
+      .get('/')
+      .end((err, res) => {
+        expect( res );
+        expect(res.body).have.property("message");
+        done();
+      });
+  });
   it("should not allow user  to  sign up without required information", done => {
     chai
       .request(app)
@@ -149,7 +160,7 @@ describe("User signin", () => {
   it("should be to be successfully logged in ", done => {
     const user = {
       email: "betty@gmail.com",
-      password: "betty123"
+      password: "Password@100"
     };
     chai
       .request(app)
