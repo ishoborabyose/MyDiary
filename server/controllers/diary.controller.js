@@ -110,6 +110,26 @@ export const deleteEntries = async (req, res) =>
   }
 }
 
+export const getDiaryById = async ( req, res ) =>
+{
+  const userId = getId( req.header( 'token' ) );
+  const text = 'SELECT * FROM entries WHERE id = $1 AND userid = $2';
+    try {
+      const { rows } = await pool.query(text, [req.params.id, userId]);
+      if (!rows[0]) {
+        return res.status(404).send({'message': 'entry not found'});
+      }
+      return res.status( 200 ).json( {
+        status: 200,
+        message:"successful get one entry",
+        data:rows
+      } );
+    } catch(error) {
+      return res.status(400).send(error)
+    }
+}
+
+
 
 
 
