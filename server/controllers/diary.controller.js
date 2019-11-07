@@ -1,117 +1,131 @@
-import uuid from 'uuid';
-import moment from 'moment';
-import { Diary } from '../models/diary.model';
-import { getEmail } from '../helpers/userdata';
+import uuid from "uuid";
+import moment from "moment";
+import { getId } from "../helpers/userdata";
+import { Pool } from "pg";
 
-export const createEntry = (req, res) => {
-  if (!req.body.title || !req.body.description) {
-    // bad request
-    res.json({
-      status: 400,
-      error: 'title and description are required',
-    });
-    return;
-  }
-  const userEmail = getEmail(req.header('token'));
-  const id = uuid.v1();
-  const newdiary = {
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL
+} );
+const id = uuid.v1();
+const createdon = moment().format( "llll" );
+      
+export const createEntry = async ( req, res ) =>
+{
+  const userId = getId( req.header( 'token' ) );
+  const { title, description, } = req.body;
+  const createQuery = `INSERT INTO entries (id, title, description, userid, createdon)
+  VALUES($1, $2, $3, $4, $5) returning * `;
+
+  const values = [
     id,
-    title: req.body.title,
-    description: req.body.description,
-    userEmail,
-    createdOn: moment().format('llll'),
-  };
+    title,
+    description,
+    userId,
+    createdon
+  ];
 
-  Diary.push(newdiary);
-  const {
-    title, description, createdOn, userId,
-  } = newdiary;
-
-  res.status(201).json({
-    status: 201,
-    data: {
-      id,
-      title,
-      description,
-      createdOn,
-      userId,
-      message: 'Entry successfully created',
-    },
-  });
-};
-
-export const getAllDiaries = (req, res) => res.json({
-  status: 200,
-  data: Diary,
-});
-
-export const deleteEntries = (req, res) => {
-  const index = Diary.find((element) => element.id === req.params.id);
-
-  if (!index) {
-    return res.status(404).json({
-      status: 404,
-      error: 'not found',
-    });
-  }
-  const userEmail = getEmail(req.header('token'));
-  if (index.userEmail !== userEmail) {
-    return res.status(403).json({
-      status: 403,
-      error: 'entry is incorrect',
-    });
-  }
-
-  Diary.splice(Diary.indexOf(Diary), 1);
-
-  return res.status(200).json({
-    status: 200,
-    message: 'Entry successfully deleted ',
-  });
-};
-
-export const modifyEntry = (req, res) => {
-  const index = Diary.find((element) => element.id === req.params.id);
-  if (!index) {
-    return res.status(404).json({
-      status: 404,
-      error: 'not found',
-    });
-  }
-
-  const userEmail = getEmail(req.header('token'));
-  if (index.userEmail !== userEmail) {
-    return res.status(403).json({
-      status: 403,
-      error: 'entry is incorrect',
-    });
-  }
-
-  index.title = req.body.title;
-  index.description = req.body.description;
-  return res.status(200).json({
-    status: 200,
-    message: 'Entry successfully edited',
-    data: {
-      index,
-    },
-  });
-};
-export const getDiaryById = (req, res) => {
-  const index = Diary.find((element) => element.id === req.params.id);
-  if (!index) {
-    return res.status(404).json({
-      status: 404,
-      error: 'not found',
-    });
-  }
-  if (index) {
-    return res.status(200).json({
-      status: 200,
+  try {
+    
+    const { rows } = await pool.query( createQuery, values );
+    return res.status(201).json({
+      status: 201,
+      message: "Entry created successfully",
       data: {
-        index,
-      },
+        id: rows[0].id,
+        title: rows[0].title,
+        description: rows[0].description,
+        userId: rows[0].userid,
+        createdon: rows[0].createdon
+      }, 
     });
+    
+  } catch (error) {
+   
+    return res.status(400).send({status: 400 , error: error.message})
   }
-  return res.status(401).send('No diary found match with provided id');
 };
+
+export const getAllDiaries = async (req, res) =>
+{
+  const userId = getId( req.header( 'token' ) );
+  const getAllQuery = 'SELECT * FROM entries WHERE userid = $1';
+    try {
+      const { rows } = await pool.query(getAllQuery, [userId]);
+      return res.status( 200 ).json( {
+        status: 200,
+        message:"successful retrieved",
+        data: rows
+      } );
+    } catch(error) {
+      return res.status(400).send(error);
+    }
+}
+
+export const modifyEntry = async ( req, res ) =>
+{
+  const text = 'SELECT * FROM entries WHERE id = $1';
+    const modifyOneQuery =`UPDATE entries
+      SET title=$1,description=$2
+      WHERE id=$3  returning *`;
+    try {
+      const { rows } = await pool.query( text, [ req.params.id] );
+      
+      if ( !rows[0] )
+      {
+        return res.status(404).send({'message': 'entry not found'});
+      }
+      
+      const values = [
+        req.body.title,
+        req.body.description,
+        req.params.id
+      ];
+      
+      const response = await pool.query( modifyOneQuery, values );
+      return res.status( 200 ).json( {
+        status: 200,
+        message:"entry successfully edited",
+        data:response.rows
+      } );
+    } catch(err) {
+      return res.status(400).send(err.message);
+    }
+}
+
+export const deleteEntries = async (req, res) =>
+{
+  const deleteQuery = 'DELETE  FROM entries WHERE id=$1 returning *';
+  try {
+    const { rows } = await pool.query(deleteQuery, [req.params.id]);
+    if ( !rows[0] )
+    {
+      return res.status(404).send({'message': 'user not found'});
+    }
+    
+    return res.status( 200 ).json( {
+      status: 200,
+      'message': 'successful deleted'
+    } );
+  } catch(error) {
+    return res.status(400).send(error);
+  }
+}
+
+export const getDiaryById = async ( req, res ) =>
+{
+  const userId = getId( req.header( 'token' ) );
+  const text = 'SELECT * FROM entries WHERE id = $1 AND userid = $2';
+    try {
+      const { rows } = await pool.query(text, [req.params.id, userId]);
+      if (!rows[0]) {
+        return res.status(404).send({'message': 'entry not found'});
+      }
+      return res.status( 200 ).json( {
+        status: 200,
+        message:"successful get one entry",
+        data:rows
+      } );
+    } catch(error) {
+      return res.status(400).send(error)
+    }
+}

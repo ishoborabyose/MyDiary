@@ -34,7 +34,6 @@ export const signupSchema = (req, res, next) => {
   next();
 };
 
-// eslint-disable-next-line consistent-return
 export const signinSchema = (req, res, next) => {
   const schema = {
     email: Joi.string()
