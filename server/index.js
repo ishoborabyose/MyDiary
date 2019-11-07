@@ -9,7 +9,11 @@ const port = process.env.PORT || 2000;
 
 app.use(express.json());
 
-app.use('/api/v1', userRoute, diaryRoutes);
+app.use( '/api/v1', userRoute, diaryRoutes );
+app.get( '/', (req,res) =>
+{
+  res.status( 200 ).json( { message:'welcome to my diary '} );
+})
 
 app.listen(port, () => process.stdout.write(`Server is running on http://localhost:${port}`));
 
