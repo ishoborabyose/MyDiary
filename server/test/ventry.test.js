@@ -96,7 +96,56 @@ describe(" Get all  diaries", () => {
         done();
       });
   });
-});
+} );
+
+//Edit
+describe(" Edit diary", () => {
+  it("should not allow user  to  edit entry  without title", done => {
+    const edittitle = {
+      description: "mine boy"
+    };
+    chai
+      .request(app)
+      .patch("/api/v1/entries/e2401fe0-0131-11ea-bb8a-1f8a1331dd55")
+      .set("token", token)
+      .send(edittitle)
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).have.property("error");
+        done();
+      });
+  });
+
+  it("should not allow user  to  edit entry  without description", done => {
+    const editdescription = {
+      title: "book"
+    };
+    chai
+      .request(app)
+      .patch("/api/v1/entries/e2401fe0-0131-11ea-bb8a-1f8a1331dd55")
+      .set("token", token)
+      .send(editdescription)
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).have.property("error");
+        done();
+      });
+  });
+
+  it("should not allow user  to  edit entry  with an invalid token", done => {
+    chai
+      .request(app)
+      .patch("/api/v1/entries/e2401fe0-0131-11ea-bb8a-1f8a1331dd55nnn")
+      .set("token", "invalid")
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).have.property("error");
+        done();
+      });
+  });
+
+} );
+
 
 
 

@@ -63,6 +63,53 @@ export const getAllDiaries = async (req, res) =>
     }
 }
 
+export const modifyEntry = async ( req, res ) =>
+{
+  const text = 'SELECT * FROM entries WHERE id = $1';
+    const modifyOneQuery =`UPDATE entries
+      SET title=$1,description=$2
+      WHERE id=$3  returning *`;
+    try {
+      const { rows } = await pool.query( text, [ req.params.id] );
+      
+      if ( !rows[0] )
+      {
+        return res.status(404).send({'message': 'entry not found'});
+      }
+      
+      const values = [
+        req.body.title,
+        req.body.description,
+        req.params.id
+      ];
+      
+      const response = await pool.query( modifyOneQuery, values );
+      return res.status( 200 ).json( {
+        status: 200,
+        message:"entry successfully edited",
+        data:response.rows
+      } );
+    } catch(err) {
+      return res.status(400).send(err.message);
+    }
+}
+
+export const deleteEntries = async (req, res) =>
+{
+  const deleteQuery = 'DELETE  FROM entries WHERE id=$1 returning *';
+  try {
+    const { rows } = await pool.query(deleteQuery, [req.params.id]);
+    if ( !rows[0] )
+    {
+      return res.status(404).send({'message': 'user not found'});
+    }
+    
+    return res.status(200).send({ 'message': 'successful deleted' });
+  } catch(error) {
+    return res.status(400).send(error);
+  }
+}
+
 
 
 
