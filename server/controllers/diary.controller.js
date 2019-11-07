@@ -1,4 +1,3 @@
-
 import uuid from "uuid";
 import moment from "moment";
 import { getId } from "../helpers/userdata";
@@ -37,8 +36,7 @@ export const createEntry = async ( req, res ) =>
         description: rows[0].description,
         userId: rows[0].userid,
         createdon: rows[0].createdon
-      },
-    
+      }, 
     });
     
   } catch (error) {
@@ -131,12 +129,3 @@ export const getDiaryById = async ( req, res ) =>
       return res.status(400).send(error)
     }
 }
-
-
-
-
-
-
-
-
-

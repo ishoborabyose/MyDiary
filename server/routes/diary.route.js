@@ -14,6 +14,4 @@ router.post( '/entries', addDiarySchema, verifiedToken, createEntry );
 router.patch( '/entries/:id', addDiarySchema, verifiedToken, modifyEntry );
 router.delete('/entries/:id', verifiedToken, deleteEntries);
 
-
-
 export default router;

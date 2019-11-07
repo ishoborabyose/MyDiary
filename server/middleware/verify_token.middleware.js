@@ -10,12 +10,12 @@ const pool = new Pool({
  export const verifiedToken = async (req, res, next) => {
     // verify if token is in 
     const token = req.header('token');
-
-    if(!token) return res.status(401).send({
-        'status': 401,
-        'message': 'Please sign in first.'
+  if (!token) {
+    return res.status(401).send({
+      status: 401,
+      message: 'Please sign in first.',
     });
-
+  }
      try
      {
          const userId = getId( req.header( 'token' ) );
@@ -37,3 +37,4 @@ const pool = new Pool({
         });
     }
 }
+

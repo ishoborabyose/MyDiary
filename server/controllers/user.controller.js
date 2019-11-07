@@ -1,15 +1,14 @@
-import { User } from "../models/user.model";
-import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import dotenv from "dotenv";
-import uuid from "uuid";
-import { Pool } from "pg";
-import decrypt from "../helpers/decryptpw";
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import dotenv from 'dotenv';
+import uuid from 'uuid';
+import { Pool } from 'pg';
+
 
 dotenv.config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
 });
 export const signup = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
@@ -33,18 +32,17 @@ export const signup = async (req, res) => {
     firstname,
     lastname,
     email,
-    hashedPassword
+    hashedPassword,
   ];
 
   try {
-    
     const { rows } = await pool.query(createQuery, values);
     const token = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
       expiresIn: "2d"
     });
     return res.status(201).json({
       status: 201,
-      message: "User created successfully",
+      message: 'User created successfully',
       data: {
         token
       },
@@ -52,17 +50,13 @@ export const signup = async (req, res) => {
         id: rows[0].id,
         firstname: rows[0].firstname,
         lastname: rows[0].lastname,
-        email: rows[0].email
-      }
+        email: rows[0].email,
+      },
     });
-    
   } catch (error) {
-   
-    return res.status(500).send({status: 500 , error: error.message})
+    return res.status(500).send({ status: 500, error: error.message });
   }
- 
 };
-
 
  export const signin = async (req, res) => {
     let { email, password } = req.body;
