@@ -104,7 +104,10 @@ export const deleteEntries = async (req, res) =>
       return res.status(404).send({'message': 'user not found'});
     }
     
-    return res.status(200).send({ 'message': 'successful deleted' });
+    return res.status( 200 ).json( {
+      status: 200,
+      'message': 'successful deleted'
+    } );
   } catch(error) {
     return res.status(400).send(error);
   }

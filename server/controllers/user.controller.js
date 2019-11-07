@@ -19,7 +19,10 @@ export const signup = async (req, res) => {
   const text = 'SELECT * FROM users WHERE email = $1';
       const { rows } = await pool.query(text, [email]);
       if (rows.length!==0) {
-        return res.status(401).send({'message': `${email} Already taken `});
+        return res.status( 409 ).json( {
+          status:409,
+          'message': `${ email } Already taken `
+        } );
       }
 
   const createQuery = `INSERT INTO users (id, firstname, lastname, email, password)
@@ -76,8 +79,8 @@ export const signup = async (req, res) => {
      const token = jwt.sign({ id: uuid.v1(), }, process.env.MY_SECRET, {
       expiresIn: "2d"
     });
-     return res.status(201).json({
-       status: 201,
+     return res.status(200).json({
+       status: 200,
        message: "successfully logged in",
        data: {
          token

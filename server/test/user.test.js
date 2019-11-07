@@ -154,7 +154,7 @@ describe("User signin", () => {
       .post("/api/v1/auth/signin")
       .send(user)
       .end((err, res) => {
-        expect(res).to.have.status(201);
+        expect(res).to.have.status(200);
         expect(res.body).to.have.property("message");
         expect(res.body).to.have.property("data");
         done();
